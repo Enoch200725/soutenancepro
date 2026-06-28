@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="app-shell">
+    {% include '_partials/sidebar_enseignant.html.twig' %}
+
+    <div class="main-content">
+        <div class="page-header">
+            <div class="page-eyebrow">Espace Enseignant</div>
+            <h1>Mes jurys</h1>
+        </div>
+
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Etudiant</th>
+                        <th>Mon role</th>
+                        <th>Date</th>
+                        <th>Heure</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for soutenance in soutenances %}
+                    <tr>
+                        <td>
+                            <span class="name-with-seal">
+                                <span class="seal-badge">{{ soutenance.etudiant.nom|first }}{{ soutenance.etudiant.prenom|first }}</span>
+                                {{ soutenance.etudiant.nom }} {{ soutenance.etudiant.prenom }}
+                            </span>
+                        </td>
+                        <td>
+                            {% if soutenance.president == enseignant %}
+                                <span class="role-badge role-badge-president">President</span>
+                            {% elseif soutenance.rapporteur == enseignant %}
+                                <span class="role-badge role-badge-rapporteur">Rapporteur</span>
+                            {% elseif soutenance.examinateur == enseignant %}
+                                <span class="role-badge role-badge-examinateur">Examinateur</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ soutenance.date ? soutenance.date|date('d/m/Y') : '' }}</td>
+                        <td class="cell-mono">{{ soutenance.heure ? soutenance.heure|date('H:i') : '' }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" class="empty-row">Vous ne participez a aucun jury pour le moment.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

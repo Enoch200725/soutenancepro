@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="app-shell">
+    {% include '_partials/sidebar_enseignant.html.twig' %}
+
+    <div class="main-content">
+        <div class="page-header">
+            <div class="page-eyebrow">Espace Enseignant</div>
+            <h1>Tableau de bord</h1>
+            <p>Bienvenue, {{ app.user.email }}</p>
+        </div>
+
+        <div class="stat-grid">
+            <div class="stat-card">
+                <div class="stat-value">{{ nbSoutenances }}</div>
+                <div class="stat-label">Soutenances</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

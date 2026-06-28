@@ -1,0 +1,23 @@
+<aside class="sidebar">
+    <div class="sidebar-brand">
+        <div class="sidebar-seal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+                <path d="M12 3 1 8l11 5 9-4.09V17h2V8L12 3Z" fill="currentColor" stroke="none"></path>
+                <path d="M5 10.5V16c0 1.5 3 3 7 3s7-1.5 7-3v-5.5"></path>
+            </svg>
+        </div>
+        <div>
+            <div class="sidebar-brand-text">SoutenancePro</div>
+            <div class="sidebar-brand-sub">Espace Enseignant</div>
+        </div>
+    </div>
+    <nav class="sidebar-nav">
+        <a href="{{ path('app_enseignant_dashboard') }}" class="{{ app.request.attributes.get('_route') == 'app_enseignant_dashboard' ? 'active' : '' }}">Tableau de bord</a>
+        <a href="{{ path('app_enseignant_soutenances') }}" class="{{ app.request.attributes.get('_route') == 'app_enseignant_soutenances' ? 'active' : '' }}">Mes soutenances</a>
+        <a href="{{ path('app_enseignant_jurys') }}" class="{{ app.request.attributes.get('_route') == 'app_enseignant_jurys' ? 'active' : '' }}">Mes jurys</a>
+    </nav>
+    <div class="sidebar-footer">
+        <div class="sidebar-user">{{ app.user.email }}</div>
+        <a href="{{ path('app_enseignant_logout') }}" class="sidebar-logout">Deconnexion</a>
+    </div>
+</aside>

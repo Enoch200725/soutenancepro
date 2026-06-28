@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="app-shell">
+    {% include '_partials/sidebar_admin.html.twig' %}
+
+    <div class="main-content">
+        <div class="page-header">
+            <div class="page-eyebrow">Administration</div>
+            <h1>Gestion des Salles</h1>
+        </div>
+
+        <div class="toolbar">
+            <div></div>
+            <a href="{{ path('app_administrateur_salle_new') }}" class="btn btn-accent">Ajouter une salle</a>
+        </div>
+
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Capacite</th>
+                        <th>Localisation</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for salle in salles %}
+                    <tr>
+                        <td class="cell-mono">{{ salle.code }}</td>
+                        <td>{{ salle.capacite }} places</td>
+                        <td>{{ salle.localisation }}</td>
+                        <td>
+                            <a href="{{ path('app_administrateur_salle_edit', {id: salle.id}) }}" class="btn btn-outline btn-sm">Modifier</a>
+                            <form method="POST" action="{{ path('app_administrateur_salle_delete', {id: salle.id}) }}" style="display:inline" onsubmit="return confirm('Supprimer cette salle ?');">
+                                <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" class="empty-row">Aucune salle enregistree.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

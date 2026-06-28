@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="app-shell">
+    {% include '_partials/sidebar_admin.html.twig' %}
+
+    <div class="main-content">
+        <div class="page-header">
+            <div class="page-eyebrow">Administration</div>
+            <h1>Tableau de bord</h1>
+            <p>Bienvenue, {{ app.user.email }}</p>
+        </div>
+
+        <div class="stat-grid">
+            <div class="stat-card">
+                <div class="stat-value">{{ nbEtudiants }}</div>
+                <div class="stat-label">Etudiants</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">{{ nbEnseignants }}</div>
+                <div class="stat-label">Enseignants</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">{{ nbSalles }}</div>
+                <div class="stat-label">Salles</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">{{ nbSoutenances }}</div>
+                <div class="stat-label">Soutenances</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

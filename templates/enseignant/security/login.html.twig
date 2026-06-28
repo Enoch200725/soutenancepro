@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="auth-screen">
+    <div class="auth-card">
+        <div class="auth-seal">
+            <svg class="cap-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width: 26px; height: 26px;">
+                <path d="M12 3 1 8l11 5 9-4.09V17h2V8L12 3Z" fill="currentColor" stroke="none"></path>
+                <path d="M5 10.5V16c0 1.5 3 3 7 3s7-1.5 7-3v-5.5"></path>
+            </svg>
+        </div>
+        <h1>Espace Enseignant</h1>
+        <p class="auth-subtitle">Connectez-vous pour consulter vos soutenances</p>
+
+        {% if app.session.flashBag.has('errors') %}
+            <div class="alert alert-error">
+                {% for msg in app.session.flashBag.get('errors') %}
+                    <p>{{ msg }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="POST" class="form-grid">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token('authenticate') }}">
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required autofocus>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" name="password" id="password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 8px;">Se connecter</button>
+        </form>
+    </div>
+
+    <a href="{{ path('app_accueil') }}" class="auth-back">Retour a l'accueil</a>
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="app-shell">
+    {% include '_partials/sidebar_admin.html.twig' %}
+
+    <div class="main-content">
+        <div class="page-header">
+            <div class="page-eyebrow">Administration</div>
+            <h1>Gestion des Etudiants</h1>
+        </div>
+
+        <div class="toolbar">
+            <form method="GET" action="{{ path('app_administrateur_etudiant_index') }}" class="search-bar">
+                <input type="text" name="nom" placeholder="Rechercher par nom" value="{{ app.request.query.get('nom') }}">
+                <button type="submit" class="btn btn-outline btn-sm">Rechercher</button>
+            </form>
+            <a href="{{ path('app_administrateur_etudiant_new') }}" class="btn btn-accent">Ajouter un etudiant</a>
+        </div>
+
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Etudiant</th>
+                        <th>Email</th>
+                        <th>Filiere</th>
+                        <th>Theme du memoire</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for etudiant in etudiants %}
+                    <tr>
+                        <td>
+                            <span class="name-with-seal">
+                                <span class="seal-badge">{{ etudiant.nom|first }}{{ etudiant.prenom|first }}</span>
+                                {{ etudiant.nom }} {{ etudiant.prenom }}
+                            </span>
+                        </td>
+                        <td class="cell-muted">{{ etudiant.email }}</td>
+                        <td>{{ etudiant.filiere }}</td>
+                        <td class="cell-muted">{{ etudiant.themeMemoire }}</td>
+                        <td>
+                            <a href="{{ path('app_administrateur_etudiant_edit', {id: etudiant.id}) }}" class="btn btn-outline btn-sm">Modifier</a>
+                            <form method="POST" action="{{ path('app_administrateur_etudiant_delete', {id: etudiant.id}) }}" style="display:inline" onsubmit="return confirm('Supprimer cet etudiant ?');">
+                                <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" class="empty-row">Aucun etudiant enregistre.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

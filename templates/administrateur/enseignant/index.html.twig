@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="app-shell">
+    {% include '_partials/sidebar_admin.html.twig' %}
+
+    <div class="main-content">
+        <div class="page-header">
+            <div class="page-eyebrow">Administration</div>
+            <h1>Gestion des Enseignants</h1>
+        </div>
+
+        <div class="toolbar">
+            <div></div>
+            <a href="{{ path('app_administrateur_enseignant_new') }}" class="btn btn-accent">Ajouter un enseignant</a>
+        </div>
+
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Enseignant</th>
+                        <th>Email</th>
+                        <th>Specialite</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for enseignant in enseignants %}
+                    <tr>
+                        <td>
+                            <span class="name-with-seal">
+                                <span class="seal-badge">{{ enseignant.nom|first }}{{ enseignant.prenom|first }}</span>
+                                {{ enseignant.nom }} {{ enseignant.prenom }}
+                            </span>
+                        </td>
+                        <td class="cell-muted">{{ enseignant.email }}</td>
+                        <td>{{ enseignant.specialite }}</td>
+                        <td>
+                            <a href="{{ path('app_administrateur_enseignant_edit', {id: enseignant.id}) }}" class="btn btn-outline btn-sm">Modifier</a>
+                            <form method="POST" action="{{ path('app_administrateur_enseignant_delete', {id: enseignant.id}) }}" style="display:inline" onsubmit="return confirm('Supprimer cet enseignant ?');">
+                                <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" class="empty-row">Aucun enseignant enregistre.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
