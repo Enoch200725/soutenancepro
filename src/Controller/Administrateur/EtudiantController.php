@@ -3,6 +3,7 @@
 namespace App\Controller\Administrateur;
 
 use App\Entity\Etudiant;
+use App\Entity\Soutenance;
 use App\Form\EtudiantFormType;
 use App\Repository\EtudiantRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -70,8 +71,17 @@ class EtudiantController extends AbstractController
     #[Route('/{id}/delete', name: 'app_administrateur_etudiant_delete', methods: ['POST'])]
     public function delete(Request $request, Etudiant $etudiant, EntityManagerInterface $entityManager): Response
     {
+        // Supprimer la soutenance liée en PREMIER et valider immédiatement en base
+        $soutenance = $entityManager->getRepository(Soutenance::class)->findOneBy(['etudiant' => $etudiant]);
+
+        if ($soutenance) {
+            $entityManager->remove($soutenance);
+            $entityManager->flush(); // flush 1 : soutenance supprimée en base
+        }
+
+        // Maintenant supprimer l'étudiant sans contrainte FK
         $entityManager->remove($etudiant);
-        $entityManager->flush();
+        $entityManager->flush(); // flush 2 : étudiant supprimé en base
 
         return $this->redirectToRoute('app_administrateur_etudiant_index');
     }
